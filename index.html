@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOCA – Clinic Management Platform</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: #ffffff;
+        color: #0f172a;
+        overflow-x: hidden;
+        height: 180vh;
+      }
+
+      /* ================= FONT ================= */
+      @font-face {
+        font-family: "PlusJakartaSans-Regular";
+        src: url("fonts/PlusJakartaSans-Regular.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "PlusJakartaSans-SemiBold";
+        src: url("fonts/PlusJakartaSans-SemiBold.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "PlusJakartaSans-Italic";
+        src: url("fonts/PlusJakartaSans-Italic.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "PlusJakartaSans-ExtraBoldItalic";
+        src: url("fonts/PlusJakartaSans-ExtraBoldItalic.ttf") format("truetype");
+      }
+
+      /* ================= HERO LOAD ANIMATIONS ================= */
+
+      /* Initial hidden state */
+      .hero h1,
+      .hero p,
+      .cta-buttons {
+        opacity: 0;
+      }
+
+      /* Keyframes */
+      @keyframes slideDownFade {
+        from {
+          opacity: 0;
+          transform: translateY(-40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideUpFade {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes scaleFade {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Animate on load */
+      .hero.animate h1 {
+        animation: slideDownFade 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      .hero.animate p {
+        animation: slideUpFade 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0.2s;
+      }
+
+      .hero.animate .cta-buttons {
+        animation: scaleFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0.45s;
+      }
+
+      /* ================= NAVBAR ================= */
+      .navbar {
+        background: #fff;
+        padding: 18px 35px;
+      }
+
+      .navbar-brand img {
+        height: 36px;
+      }
+
+      /* CENTER NAV LINKS */
+      .navbar-nav {
+        gap: 28px;
+      }
+
+      .navbar-collapse {
+        justify-content: flex-end;
+      }
+
+      .nav-link {
+        color: #9a9a9a;
+        font-size: 14.5px;
+        font-weight: 400;
+        padding: 0;
+        transition: color 0.25s ease, font-weight 0.25s ease;
+        font-family: "PlusJakartaSans-Regular";
+      }
+
+      .nav-link:hover {
+        color: #7332de;
+      }
+
+      .nav-link.active {
+        color: #000;
+        font-weight: 600;
+      }
+
+      /* ================= HAMBURGER ================= */
+      .navbar-toggler {
+        border: none;
+        padding: 0;
+      }
+
+      .navbar-toggler:focus {
+        box-shadow: none;
+      }
+
+      .hamburger {
+        width: 26px;
+        height: 20px;
+        position: relative;
+      }
+
+      .hamburger span {
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: #000;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        left: 0;
+      }
+
+      .hamburger span:nth-child(1) {
+        top: 0;
+      }
+      .hamburger span:nth-child(2) {
+        top: 9px;
+      }
+      .hamburger span:nth-child(3) {
+        bottom: 0;
+      }
+
+      .navbar-toggler[aria-expanded="true"] .hamburger span:nth-child(1) {
+        transform: rotate(45deg);
+        top: 9px;
+      }
+
+      .navbar-toggler[aria-expanded="true"] .hamburger span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .navbar-toggler[aria-expanded="true"] .hamburger span:nth-child(3) {
+        transform: rotate(-45deg);
+        bottom: 9px;
+      }
+
+      /* ================= MOBILE ================= */
+      @media (max-width: 991px) {
+        .navbar {
+          padding: 14px 20px;
+        }
+
+        .navbar-collapse {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #fff;
+          padding: 16px 20px;
+          border-top: 1px solid #eee;
+          transform: translateY(-10px);
+          opacity: 0;
+          transition: all 0.25s ease;
+        }
+
+        .navbar-collapse.show {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
+        .navbar-nav {
+          align-items: flex-start;
+          gap: 14px;
+        }
+      }
+
+      section#section-1 {
+        min-height: 100vh;
+      }
+
+      /* HERO */
+      .hero {
+        padding: 165px 60px 0;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .hero-wrapper {
+        background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+
+      .hero h1 {
+        font-size: 64px;
+        font-weight: 600;
+        line-height: 1.1;
+        margin-bottom: 24px;
+        font-family: "PlusJakartaSans-SemiBold";
+      }
+
+      .highlight {
+        color: #7332de; /* 🔥 UI COLOR */
+      }
+
+      .word-one {
+        display: inline-flex;
+        align-items: baseline;
+      }
+
+      .word-one img {
+        width: 52px;
+        height: auto;
+        position: relative;
+        top: 14px;
+      }
+
+      .hero p {
+        font-size: 18px;
+        color: #3b3b3b;
+        max-width: 650px;
+        margin: 0 auto 40px;
+        font-family: "PlusJakartaSans-Regular";
+        padding: 0px 60px;
+      }
+
+      .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .btn {
+        position: relative; /* REQUIRED */
+        z-index: 1000; /* Above animation layer */
+
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 14px;
+
+        pointer-events: auto; /* Ensure interaction */
+      }
+
+      .btn-primary {
+        /* Linear gradient */
+        background: linear-gradient(
+          135deg,
+          #677be6 0%,
+          #677be6 50%,
+          #754ea6 100%
+        );
+
+        color: #ffffff;
+        border: none;
+        border-radius: 30px;
+
+        /* Drop shadow (X:0, Y:24, Blur:47.9, Color:#260073 @27%) */
+        box-shadow: 0 24px 48px rgba(38, 0, 115, 0.27);
+
+        padding: 14px 28px;
+        font-weight: 600;
+        cursor: pointer;
+
+        /* Smooth interaction */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      /* Hover effect */
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 28px 56px rgba(38, 0, 115, 0.32);
+      }
+
+      /* Active state */
+      .btn-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 18px 36px rgba(38, 0, 115, 0.25);
+      }
+
+      .btn-secondary {
+        height: 52px;
+        padding: 0 36px;
+
+        border-radius: 26px; /* height / 2 */
+        font-weight: 600;
+        color: #2d2d2d;
+        cursor: pointer;
+
+        /* 🔥 Gradient border without masks */
+        border: 1px solid transparent;
+        background: linear-gradient(#ffffff, #ffffff) padding-box,
+          linear-gradient(90deg, #677be6, #f9df08, #754ea6) border-box;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        transition: background 0.25s ease, color 0.25s ease,
+          box-shadow 0.25s ease, transform 0.25s ease;
+      }
+
+      .btn-secondary:hover {
+        color: #ffffff;
+
+        background: linear-gradient(
+              135deg,
+              #677be6 0%,
+              #677be6 50%,
+              #754ea6 100%
+            )
+            padding-box,
+          linear-gradient(135deg, #677be6, #677be6, #754ea6) border-box;
+
+        box-shadow: 0 24px 48px rgba(38, 0, 115, 0.27);
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary:active {
+        transform: translateY(0);
+        box-shadow: 0 18px 36px rgba(38, 0, 115, 0.25);
+      }
+
+      /* TABLET SCENE */
+
+      .tablet-scene {
+        margin-top: 10px;
+        width: 100%;
+        /* display: flex; */
+        perspective: 2000px;
+        position: relative;
+        transform: translateY(-28rem);
+        pointer-events: none;
+        margin-left: auto;
+        margin-right: auto;
+        align-content: center;
+        align-items: center;
+      }
+
+      .tablet {
+        width: 1150px;
+        height: 630px;
+        margin: auto;
+        background: #0f172a;
+        border-radius: 28px;
+        padding: 10px;
+        transform-style: preserve-3d;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        transform: rotateX(75deg) translateY(220px);
+        transition: transform 3.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .tablet.active {
+        transform: rotateX(0deg) translateY(320px) scale(1.1);
+      }
+
+      .camera-notch {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70px;
+        height: 14px;
+        background: #020617;
+        border-radius: 10px;
+        z-index: 10;
+      }
+
+      .screen {
+        width: 100%;
+        height: 100%;
+        background: #eef2ff;
+        border-radius: 18px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* SLEEP SCREEN */
+      .sleep-screen {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+        color: rgba(15, 23, 42, 0.35);
+        transition: opacity 0.8s ease;
+      }
+
+      .tablet.active .sleep-screen {
+        opacity: 0;
+      }
+
+      /* STATUS BAR */
+      .status-bar {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        opacity: 0;
+        color: #0f172a;
+      }
+
+      .tablet.active .status-bar {
+        opacity: 1;
+      }
+
+      /* DASHBOARD */
+      .dashboard {
+        padding: 60px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease 0.6s;
+      }
+
+      .tablet.active .dashboard {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .dashboard h2 {
+        font-size: 26px;
+        margin-bottom: 20px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+
+      .feature-item {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 14px;
+        text-align: center;
+        font-size: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .home-indicator {
+        position: absolute;
+        bottom: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90px;
+        height: 4px;
+        background: #1e293b;
+        border-radius: 4px;
+      }
+
+      /* ================= SECTION 2 : TRUST ================= */
+
+      .trust-section {
+        padding: 30px 60px 100px;
+        text-align: center;
+      }
+
+      .trust-section h2 {
+        font-family: "PlusJakartaSans-SemiBold";
+        font-size: 65px;
+        line-height: 1.2;
+        color: #202020;
+        margin-bottom: 18px;
+      }
+
+      .trust-section p {
+        font-family: "PlusJakartaSans-Regular";
+        font-size: 20px;
+        color: #3b3b3b;
+        max-width: 720px;
+        margin: 0 auto 60px;
+        padding: 0px 30px;
+      }
+
+      /* ================= LOGO SLIDER ================= */
+
+      .logo-slider {
+        height: 100px;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+      }
+
+      .logo-track {
+        display: flex;
+        width: calc(250px * 12);
+        animation: logo-scroll 40s linear infinite;
+      }
+
+      .logo-slide {
+        width: 250px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-slide img {
+        max-height: 75px;
+        width: auto;
+        opacity: 0.6;
+        filter: grayscale(100%);
+        transition: opacity 0.25s ease, filter 0.25s ease;
+      }
+
+      .logo-slide img:hover {
+        opacity: 1;
+        filter: grayscale(0%);
+      }
+
+      /* ================= ANIMATION ================= */
+
+      @keyframes logo-scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(calc(-250px * 6));
+        }
+      }
+
+      /* ================= TRUST SECTION TEXT ANIMATION ================= */
+
+      /* Initial hidden state */
+      .trust-section h2,
+      .trust-section p {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      /* Animate when section becomes active */
+      .trust-section.animate h2 {
+        animation: trustFadeUp 0.9s ease-out forwards;
+      }
+
+      .trust-section.animate p {
+        animation: trustFadeUp 0.9s ease-out 0.3s forwards;
+      }
+
+      /* Keyframes */
+      @keyframes trustFadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ================= SECTION 3 : PROBLEM VS SOLUTION ================= */
+      /* ================= SECTION WRAPPER ================= */
+
+      .section-3 {
+        padding: 50px 30px;
+        background: #ffffff;
+      }
+
+      .section-3-wrapper {
+        max-width: 1390px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+
+      /* ================= COMMON CARD BASE ================= */
+
+      .section-card {
+        border-radius: 25px;
+        padding: 42px;
+        min-height: 460px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* ================= PROBLEM CARD ================= */
+
+      .problem-card {
+        background: linear-gradient(145deg, #6b7fe8, #5e70dc);
+        color: #ffffff;
+      }
+
+      /* Noise texture */
+      .problem-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+        opacity: 0.12;
+        pointer-events: none;
+      }
+
+      .problem-card small {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #ffe66d;
+        margin-bottom: 18px;
+        font-family: "PlusJakartaSans-SemiBold";
+      }
+
+      .problem-card h3 {
+        font-size: 26px;
+        line-height: 1.3;
+        margin-bottom: 20px;
+        max-width: 420px;
+        font-family: "PlusJakartaSans-SemiBold";
+      }
+
+      .problem-card p {
+        font-size: 13px;
+        line-height: 1.8;
+        opacity: 0.95;
+        max-width: fit-content;
+        padding-right: 100px;
+        font-family: "PlusJakartaSans-Regular";
+      }
+
+      /* ================= SOLUTION CARD ================= */
+
+      .solution-card {
+        background: linear-gradient(135deg, #7b2fe0, #9a4fe8);
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .solution-card::after {
+        display: none;
+      }
+
+      .solution-card small {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #f9df08;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "PlusJakartaSans-SemiBold";
+      }
+
+      /* ================= SOLUTION HEADING ================= */
+
+      .solution-heading {
+        max-width: 540px;
+        font-family: "PlusJakartaSans-SemiBold";
+        line-height: 1.25;
+      }
+
+      /* DOCA + subtitle line */
+      .doca-line {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      /* DOCA text */
+      .doca-title {
+        font-size: 42px;
+        line-height: 1;
+        font-family: "PlusJakartaSans-ExtraBoldItalic";
+      }
+
+      /* Subtitle */
+      .doca-subtitle {
+        font-size: 13.5px;
+        opacity: 0.85;
+        white-space: nowrap;
+        font-family: "PlusJakartaSans-regular";
+        padding-top: 3px;
+        font-style: italic;
+      }
+
+      .doca-subtitle .cap {
+        font-weight: 700;
+      }
+
+      /* ================= FIXED 3-LINE DESCRIPTION ================= */
+
+      .solution-text {
+        display: block;
+        font-size: 32px;
+      }
+
+      .solution-text span {
+        display: block;
+        font-family: "PlusJakartaSans-ExtraBoldItalic";
+        font-size: 25px;
+      }
+
+      .solution-text span:not(:last-child) {
+        margin-bottom: 4px;
+      }
+
+      /* ================= MOBILE ================= */
+
+      @media (max-width: 991px) {
+        .section-3-wrapper {
+          grid-template-columns: 1fr;
+        }
+
+        .section-card {
+          min-height: auto;
+        }
+
+        .solution-text {
+          font-size: 26px;
+        }
+
+        .doca-line {
+          flex-wrap: wrap;
+        }
+      }
+
+      /* ================= SECTION 3 SCROLL ANIMATION ================= */
+
+      .section-3 .section-card {
+        opacity: 0;
+        transition: transform 0.9s ease, opacity 0.9s ease;
+        will-change: transform, opacity;
+      }
+
+      /* Initial positions */
+      .section-3 .problem-card {
+        transform: translateX(-80px);
+      }
+
+      .section-3 .solution-card {
+        transform: translateX(80px);
+      }
+
+      /* Active state */
+      .section-3.animate .section-card {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      /* Optional stagger */
+      .section-3.animate .solution-card {
+        transition-delay: 0.2s;
+      }
+
+      /* ================= SECTION 4 ================= */
+
+      .section-4 {
+        padding: 120px 60px;
+        background: #ffffff;
+      }
+
+      .section-4-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      /* HEADER */
+
+      .section-4-header {
+        text-align: center;
+        margin-bottom: 100px;
+      }
+
+      .role-badge {
+        margin-bottom: 25px;
+        height: 52px;
+        padding: 0 36px;
+        border-radius: 26px;
+        font-weight: 600;
+        color: #2d2d2d;
+        border: 1px solid transparent;
+        background: linear-gradient(#ffffff, #ffffff) padding-box,
+          linear-gradient(90deg, #677be6, #f9df08, #754ea6) border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.25s ease;
+      }
+
+      .role-badge:hover {
+        color: #ffffff;
+        background: linear-gradient(135deg, #677be6 0%, #754ea6 100%)
+            padding-box,
+          linear-gradient(135deg, #677be6, #754ea6) border-box;
+        box-shadow: 0 24px 48px rgba(38, 0, 115, 0.27);
+        transform: translateY(-2px);
+      }
+
+      .section-4-header h2 {
+        font-size: 65px;
+        font-family: "PlusJakartaSans-SemiBold";
+        color: #0f172a;
+      }
+
+      /* GRID */
+
+      .section-4-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 120px;
+        align-items: center;
+      }
+
+      /* LEFT */
+
+      .section-4-left {
+        max-width: 420px;
+      }
+
+      .benefits-label {
+        font-family: "PlusJakartaSans-SemiBold";
+        display: block;
+        font-size: 15px;
+        color: #6e35d5;
+        margin-bottom: 14px;
+      }
+
+      .section-4-left h3 {
+        font-size: 30px;
+        line-height: 1.2;
+        margin-bottom: 25px;
+        color: #2e2e2e;
+        font-family: "PlusJakartaSans-SemiBold";
+      }
+
+      .section-4-left ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .section-4-left li {
+        font-size: 15px;
+        color: #3b3b3b;
+        margin-bottom: 14px;
+        padding-left: 18px;
+        position: relative;
+        font-family: "PlusJakartaSans-Regular";
+      }
+
+      .section-4-left li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        top: -3px;
+        align-items: center;
+        color: #202020;
+        font-size: 18px;
+      }
+
+      /* RIGHT */
+
+      .section-4-right {
+        position: relative;
+      }
+
+      .video-label {
+        display: block;
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 25px;
+        font-style: italic;
+        font-family: "PlusJakartaSans-Regular";
+      }
+
+      /* VIDEO STACK */
+
+      .video-stack {
+        position: relative;
+        width: 100%;
+        max-width: 520px;
+        height: 360px;
+      }
+
+      .video-layer {
+        position: absolute;
+        inset: 0;
+        border-radius: 18px;
+      }
+
+      .layer-1 {
+        background: #e6dbff;
+        transform: translateY(-22px);
+      }
+
+      .layer-2 {
+        background: #cdb8ff;
+        transform: translateY(-11px);
+      }
+
+      .video-main {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #7332de;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* PLAY BUTTON */
+
+      .play-button {
+        width: 72px;
+        height: 72px;
+        background: #ffffff;
+        border-radius: 50%;
+        font-size: 22px;
+        color: #7332de;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* SECTION 4 INITIAL */
+      .section-4-header {
+        opacity: 0;
+        transform: translateY(60px);
+        transition: all 0.8s ease;
+      }
+
+      .section-4-left {
+        opacity: 0;
+        transform: translateX(-80px);
+        transition: all 0.8s ease;
+      }
+
+      .section-4-right {
+        opacity: 0;
+        transform: translateX(80px);
+        transition: all 0.8s ease;
+      }
+
+      /* ACTIVE */
+      .section-4.animate .section-4-header {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-4.animate .section-4-left {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.15s;
+      }
+
+      .section-4.animate .section-4-right {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.3s;
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 991px) {
+        .section-4 {
+          padding: 100px 24px;
+        }
+
+        .section-4-grid {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+
+        .section-4-header h2 {
+          font-size: 40px;
+        }
+
+        .section-4-left h3 {
+          font-size: 24px;
+        }
+
+        .video-stack {
+          height: 280px;
+        }
+      }
+
+      /* ================= SECTION 5 ================= */
+
+      .section-5 {
+        position: relative;
+        height: 900px;
+        color: #ffffff;
+        overflow: hidden;
+        background: linear-gradient(
+          260deg,
+          #677be6 0%,
+          #7439d4 50%,
+          #4f08b2 100%
+        );
+      }
+
+      .section-5::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* subtle vertical grid */
+      .section-5::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-size: 220px 100%;
+        pointer-events: none;
+      }
+
+      .section-5-inner {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding-top: 140px;
+        position: relative;
+        z-index: 2;
+        text-align: center;
+      }
+
+      /* HEADER */
+
+      .section-5-header h2 {
+        font-size: 56px;
+        font-family: "PlusJakartaSans-SemiBold";
+        margin-bottom: 14px;
+      }
+
+      .section-5-header p {
+        font-size: 16px;
+        opacity: 0.9;
+        line-height: 1.6;
+        max-width: 760px;
+        margin: 0 auto 36px;
+      }
+
+      /* TAB WRAPPER */
+      .tabs-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 22px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* TAB PILLS */
+      .tabs-pill {
+        display: flex;
+        width: 100%;
+        max-width: 920px;
+        height: 56px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.28);
+        backdrop-filter: blur(8px);
+      }
+
+      /* TABS */
+      .tab {
+        flex: 1;
+        border-radius: 999px;
+        font-size: 13px;
+        font-family: "PlusJakartaSans-Regular";
+        color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        white-space: nowrap;
+      }
+
+      /* Hover */
+      .tab:hover {
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      /* Active */
+      .tab.active {
+        background: #ffffff;
+        color: #1f1f1f;
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      }
+
+      /* PRODUCT TOUR */
+      .product-tour {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 70px;
+      }
+
+      /* PREVIEW — HALF VISIBLE */
+
+      .preview-overflow {
+        position: absolute;
+        bottom: -140px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        z-index: 1;
+      }
+      .preview-card {
+        max-width: 1000px;
+        width: 100%;
+        height: 560px;
+        background: #e9ebff;
+        border-radius: 28px;
+        padding: 48px;
+        box-sizing: border-box;
+      }
+
+      .preview-content {
+        max-width: 620px;
+        color: #1f1f1f;
+        animation: fadeIn 0.35s ease;
+      }
+
+      .preview-content h3 {
+        font-size: 26px;
+        margin-bottom: 14px;
+        font-family: "PlusJakartaSans-SemiBold";
+      }
+
+      .preview-content p {
+        font-size: 15px;
+        line-height: 1.7;
+        opacity: 0.85;
+      }
+
+      /* SECTION 5 INITIAL */
+      .section-5-header,
+      .tabs-wrapper,
+      .product-tour {
+        opacity: 0;
+        transform: translateY(60px);
+        transition: all 0.8s ease;
+      }
+
+      .preview-card {
+        opacity: 0;
+        transform: translateY(100px);
+        transition: all 0.9s ease;
+      }
+
+      /* ACTIVE */
+      .section-5.animate .section-5-header {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-5.animate .tabs-wrapper {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.15s;
+      }
+
+      .section-5.animate .product-tour {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+      }
+
+      .section-5.animate .preview-card {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.45s;
+      }
+
+      /* Fade animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 991px) {
+        .section-5 {
+          height: 640px;
+        }
+
+        .section-5-header h2 {
+          font-size: 38px;
+        }
+
+        .tabs-pill {
+          flex-wrap: wrap;
+        }
+
+        .preview-overflow {
+          bottom: -200px;
+        }
+
+        .preview-card {
+          height: 380px;
+        }
+      }
+
+      /* ================= SECTION 6 ================= */
+
+      .section-6 {
+        padding: 120px 80px;
+        background: #ffffff;
+      }
+
+      .section-6-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      /* HEADER LAYOUT */
+      .section-6-header {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 40px;
+        align-items: center;
+        margin-bottom: 100px;
+      }
+
+      .section-6-header h2 {
+        font-size: 56px;
+        line-height: 1.15;
+        font-family: "PlusJakartaSans-SemiBold";
+        color: #202020;
+      }
+
+      .section-6-sub {
+        text-align: left;
+      }
+
+      .section-6-sub p {
+        font-size: 18px;
+        color: #3b3b3b;
+        margin-bottom: 26px;
+        font-family: "PlusJakartaSans-Regular";
+      }
+
+      /* BUTTON */
+      .section-6-sub .btn-primary {
+        padding: 14px 30px;
+        font-size: 14px;
+        border-radius: 8px;
+      }
+
+      /* ROLE GRID */
+      .role-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        height: 345px;
+      }
+
+      /* ROLE CARD */
+      .role-card {
+        background: #eef0ff;
+        border-radius: 20px;
+        padding: 34px 32px;
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .role-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 22px 50px rgba(38, 0, 115, 0.18);
+      }
+
+      /* ROLE PILL */
+      .role-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 13px;
+        font-weight: 600;
+        color: #202020;
+        padding: 7px 14px;
+        border-radius: 999px;
+        font-family: "PlusJakartaSans-SemiBold";
+
+        /* 🔥 Gradient border like btn-secondary */
+        border: 1px solid transparent;
+        background: linear-gradient(#eef0ff, #eef0ff) padding-box,
+          linear-gradient(90deg, #677be6, #f9df08, #754ea6) border-box;
+
+        margin-bottom: 14px;
+      }
+
+      /* ROLE TEXT */
+      .role-card p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: #1f2937;
+        font-family: "PlusJakartaSans-Regular";
+      }
+
+      /* SECTION 6 INITIAL */
+      .section-6-header h2,
+      .section-6-sub {
+        opacity: 0;
+        transform: translateY(60px);
+        transition: all 0.8s ease;
+      }
+
+      .role-card {
+        opacity: 0;
+        transform: translateY(80px);
+        transition: all 0.8s ease;
+      }
+
+      /* ACTIVE */
+      .section-6.animate .section-6-header h2 {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-6.animate .section-6-sub {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+
+      .section-6.animate .role-card:nth-child(1) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.25s;
+      }
+
+      .section-6.animate .role-card:nth-child(2) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.4s;
+      }
+
+      .section-6.animate .role-card:nth-child(3) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.55s;
+      }
+
+      /* ================= MOBILE ================= */
+
+      @media (max-width: 991px) {
+        .section-6 {
+          padding: 90px 24px;
+        }
+
+        .section-6-header {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .section-6-header h2 {
+          font-size: 38px;
+        }
+
+        .section-6-sub {
+          text-align: center;
+        }
+
+        .role-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="container-fluid">
+        <!-- LOGO -->
+        <a class="navbar-brand" href="#">
+          <img src="/Doca/assets/logo/doca-logo.png" alt="DOCA Logo" />
+        </a>
+
+        <!-- HAMBURGER -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#docaNavbar"
+          aria-expanded="false"
+        >
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+
+        <!-- NAV LINKS -->
+        <div class="collapse navbar-collapse" id="docaNavbar">
+          <ul class="navbar-nav">
+            <li><a class="nav-link active" href="#">Home</a></li>
+            <li><a class="nav-link" href="#">Why DOCA</a></li>
+            <li><a class="nav-link" href="#">Benefits</a></li>
+            <li><a class="nav-link" href="#">Product Tour</a></li>
+            <li><a class="nav-link" href="#">Use Cases</a></li>
+            <li><a class="nav-link" href="#">Trust & Credibility</a></li>
+            <li><a class="nav-link" href="#">Primary Conversation</a></li>
+            <li><a class="nav-link" href="#">FAQs</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="hero-wrapper">
+      <section id="section-1" class="hero">
+        <h1>
+          <span class="highlight">
+            <span class="word-one">
+              <img src="/Doca/assets/one-icon.png" alt="O icon" />
+              <span class="ne">ne</span>
+            </span>
+            platform
+          </span>
+          to manage<br />
+          your complete clinic
+        </h1>
+
+        <p>
+          Manage appointments, patients, prescriptions, staff, and reports, all
+          in one simple, powerful system.
+        </p>
+
+        <div class="cta-buttons">
+          <a class="btn btn-primary"
+            >Get Started <i class="fa-solid fa-arrow-right"></i
+          ></a>
+          <a class="btn btn-secondary">Explore How DOCA Works</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="tablet-scene">
+      <div class="tablet" id="tablet">
+        <div class="camera-notch"></div>
+
+        <div class="screen">
+          <div class="sleep-screen">DOCA Dashboard</div>
+
+          <div class="status-bar">
+            <div id="currentTime">09:41</div>
+            <div>📶 🔋</div>
+          </div>
+
+          <div class="dashboard">
+            <h2>Clinic Overview</h2>
+            <div class="feature-grid">
+              <div class="feature-item">🗓️</div>
+              <div class="feature-item">👨‍⚕️</div>
+              <div class="feature-item">💊</div>
+              <div class="feature-item">📊</div>
+            </div>
+          </div>
+
+          <div class="home-indicator"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SECTION 2 : TRUST LOGOS ================= -->
+    <section id="section-2" class="trust-section">
+      <h2>Designed for Real Clinics,<br />Real Workflows</h2>
+
+      <p>
+        DOCA is built after understanding real on-ground clinic challenges.
+        Every screen is designed to be simple, fast, and practical for daily
+        use.
+      </p>
+
+      <div class="logo-slider">
+        <div class="logo-track">
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png"
+              alt=""
+            />
+          </div>
+
+          <!-- DUPLICATE FOR INFINITE LOOP -->
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png"
+              alt=""
+            />
+          </div>
+          <div class="logo-slide">
+            <img
+              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 3 : PROBLEM VS SOLUTION ================= -->
+    <section class="section-3">
+      <div class="section-3-wrapper">
+        <!-- PROBLEM CARD -->
+        <div class="section-card problem-card">
+          <small>Problem faced by clinics</small>
+          <h3>Clinic Work Shouldn’t Feel Complicated</h3>
+          <p>
+            Running a clinic often means juggling multiple tools, manual
+            registers, and scattered patient data. Appointments get missed.
+            Records are hard to find. Teams struggle to stay aligned.
+          </p>
+        </div>
+
+        <!-- SOLUTION CARD -->
+        <div class="section-card solution-card">
+          <small>Solution by Indigital</small>
+
+          <h3 class="solution-heading">
+            <span class="doca-line">
+              <span class="doca-title">DOCA</span>
+              <span class="doca-subtitle">
+                <span class="cap">D</span>octor’s <span class="cap">O</span>wn
+                <span class="cap">C</span>linic
+                <span class="cap">A</span>pplication
+              </span>
+            </span>
+
+            <!-- FIXED 3-LINE TEXT -->
+            <span class="solution-text">
+              <span>brings everything together</span>
+              <span>into one clean dashboard, so your clinic</span>
+              <span>runs smoothly, every single day.</span>
+            </span>
+          </h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 4 : CLINIC OWNERS & ADMINS ================= -->
+    <section class="section-4">
+      <div class="section-4-inner">
+        <!-- HEADER -->
+        <div class="section-4-header">
+          <span class="role-badge">
+            <i class="fa-solid fa-user"></i>
+            Role based key features benefits
+          </span>
+          <h2>For Clinic Owners & Admins</h2>
+        </div>
+
+        <!-- CONTENT GRID -->
+        <div class="section-4-grid">
+          <!-- LEFT CONTENT -->
+          <div class="section-4-left">
+            <span class="benefits-label">Benefits for Clinics</span>
+
+            <h3>
+              Run your clinic with clarity<br />
+              and control
+            </h3>
+
+            <ul>
+              <li>Centralized appointment & staff management</li>
+              <li>Attendance, billing, and reporting in one place</li>
+              <li>Real-time overview of daily clinic performance</li>
+            </ul>
+          </div>
+
+          <!-- RIGHT VIDEO -->
+          <div class="section-4-right">
+            <span class="video-label">Appointment & staff management</span>
+
+            <div class="video-stack">
+              <div class="video-layer layer-1"></div>
+              <div class="video-layer layer-2"></div>
+
+              <div class="video-main">
+                <div class="play-button">▶</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 5 :  DOCA in Action ================= -->
+    <section class="section-5">
+      <div class="section-5-inner">
+        <!-- HEADER -->
+        <div class="section-5-header">
+          <h2>See DOCA in Action</h2>
+          <p>
+            Explore how DOCA supports your clinic throughout the day, from the
+            first appointment to end-of-day reports.
+          </p>
+        </div>
+
+        <!-- TAB PILLS -->
+        <div class="tabs-wrapper">
+          <div class="tabs-pill">
+            <span class="tab active" data-key="schedule"
+              >Today’s Schedule View</span
+            >
+            <span class="tab" data-key="profile"
+              >Patient Profile & History</span
+            >
+            <span class="tab" data-key="prescriptions"
+              >Digital Prescriptions</span
+            >
+            <span class="tab" data-key="reports"
+              >Reports & Insights Dashboard</span
+            >
+          </div>
+        </div>
+
+        <!-- PRODUCT TOUR -->
+        <div class="product-tour">
+          <i class="fa-solid fa-user"></i>
+          Product Tour
+        </div>
+      </div>
+
+      <!-- PREVIEW (half visible) -->
+      <div class="preview-overflow">
+        <div class="preview-card">
+          <div class="preview-content" id="previewContent">
+            <h3>Today’s Schedule View</h3>
+            <p>
+              View your entire day at a glance. Track appointments, doctor
+              availability, walk-ins, and real-time schedule changes in one
+              clean dashboard.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION 6 : BUILT FOR EVERY ROLE ================= -->
+    <section class="section-6">
+      <div class="section-6-inner">
+        <!-- HEADER -->
+        <div class="section-6-header">
+          <h2>Built for Every Role<br />in Your Clinic</h2>
+
+          <div class="section-6-sub">
+            <p>
+              Designed for every clinic role.<br />
+              One dashboard that keeps everyone aligned.
+            </p>
+
+            <a class="btn btn-primary"> Request a Product Walkthrough → </a>
+          </div>
+        </div>
+
+        <!-- ROLE CARDS -->
+        <div class="role-grid">
+          <!-- CARD 1 -->
+          <div class="role-card">
+            <span class="role-pill">Solo Doctors</span>
+            <p>
+              Everything you need to manage patients and appointments without
+              extra staff.
+            </p>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="role-card">
+            <span class="role-pill">Small Clinics</span>
+            <p>Keep doctors, staff, and schedules perfectly aligned.</p>
+          </div>
+
+          <!-- CARD 3 -->
+          <div class="role-card">
+            <span class="role-pill">Multi-Specialty Clinics</span>
+            <p>
+              Standardize workflows and track performance across departments.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ================= CORE ELEMENTS ================= */
+
+      const tablet = document.getElementById("tablet");
+      const hero = document.querySelector(".hero");
+
+      const trustSection = document.querySelector(".trust-section");
+      const section3 = document.querySelector(".section-3");
+      const section4 = document.querySelector(".section-4");
+      const section5 = document.querySelector(".section-5");
+      const section6 = document.querySelector(".section-6");
+
+      const animatedSections = [
+        trustSection,
+        section3,
+        section4,
+        section5,
+        section6,
+      ];
+
+      /* ================= TIME UPDATE ================= */
+
+      function updateTime() {
+        const now = new Date();
+        const timeEl = document.getElementById("currentTime");
+        if (!timeEl) return;
+
+        timeEl.textContent =
+          now.getHours().toString().padStart(2, "0") +
+          ":" +
+          now.getMinutes().toString().padStart(2, "0");
+      }
+
+      updateTime();
+      setInterval(updateTime, 60000);
+
+      /* ================= SCROLL ANIMATIONS ================= */
+
+      function animateOnScroll() {
+        const triggerPoint = window.innerHeight * 0.85;
+
+        animatedSections.forEach((section) => {
+          if (!section) return;
+
+          const top = section.getBoundingClientRect().top;
+          if (top < triggerPoint) {
+            section.classList.add("animate");
+          }
+        });
+
+        /* Tablet 3D animation */
+        if (window.scrollY > window.innerHeight * 0.2) {
+          tablet.classList.add("active");
+        } else {
+          tablet.classList.remove("active");
+        }
+      }
+
+      /* ================= EVENT LISTENERS ================= */
+
+      window.addEventListener("scroll", animateOnScroll);
+
+      window.addEventListener("load", () => {
+        hero.classList.add("animate");
+        animateOnScroll(); // 🔥 CRITICAL: run on refresh
+      });
+
+      /* ================= SECTION 5 TABS ================= */
+
+      const tabs = document.querySelectorAll(".tab");
+      const previewContent = document.getElementById("previewContent");
+
+      const tabData = {
+        schedule: {
+          title: "Today’s Schedule View",
+          text: "View your entire day at a glance. Track appointments, doctor availability, walk-ins, and real-time schedule changes in one clean dashboard.",
+        },
+        profile: {
+          title: "Patient Profile & History",
+          text: "Access complete patient records including visit history, notes, reports, and documents from a single unified profile.",
+        },
+        prescriptions: {
+          title: "Digital Prescriptions",
+          text: "Create, manage, and share digital prescriptions securely. Reduce errors and improve efficiency with standardized formats.",
+        },
+        reports: {
+          title: "Reports & Insights Dashboard",
+          text: "Get real-time insights into clinic performance, attendance, revenue, and trends with easy-to-read visual reports.",
+        },
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          const key = tab.dataset.key;
+          const data = tabData[key];
+
+          previewContent.innerHTML = `
+      <h3>${data.title}</h3>
+      <p>${data.text}</p>
+    `;
+        });
+      });
+    </script>
+  </body>
+</html>
