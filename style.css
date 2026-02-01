@@ -1,0 +1,241 @@
+/* ================= ROOT VARIABLES (REUSABLE) ================= */
+:root {
+    --primary-blue: #3E97FF;
+    --primary-purple: #8128F0;
+    --text-white: #ffffff;
+    --btn-height: 48px;
+    --navbar-height: 72px;
+    --gradient-main: linear-gradient(135deg,
+            #3E97FF 0%,
+            #8128F0 100%);
+}
+
+/* ================= FONTS ================= */
+@font-face {
+    font-family: "PlusJakartaSans";
+    src: url("/fonts/PlusJakartaSans-SemiBold.ttf") format("truetype");
+    font-style: normal;
+}
+
+
+
+
+
+/* ================= GLOBAL ================= */
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background-color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* ================= NAVBAR ================= */
+.navbar-custom {
+    height: var(--navbar-height);
+    padding: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Sticky state */
+.navbar-custom.scrolled {
+    background: var(--gradient-main);
+}
+
+
+/* Logo */
+.navbar-brand {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo {
+    height: 32px;
+    width: auto;
+    display: block;
+}
+
+/* ================= GRADIENT TEXT (REUSABLE) ================= */
+.text-gradient-primary {
+    background: linear-gradient(90deg,
+            #3E97FF 0%,
+            #8128F0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ================= BUY NOW BUTTON ================= */
+.btn-buy {
+    width: 150px;
+    height: 43px;
+    border-radius: 11px;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    font-family: "PlusJakartaSans", sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.btn-buy:hover,
+.btn-buy:focus,
+.btn-buy:active,
+.btn-buy:visited {
+    text-decoration: none;
+}
+
+/* ================= HERO SECTION ================= */
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    padding-top: calc(var(--navbar-height) + 40px);
+    /* overflow: hidden; */
+}
+
+/* Gradient Ellipse */
+.hero-ellipse {
+    position: absolute;
+    top: -54%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180%;
+    height: 140%;
+    background: var(--gradient-main);
+    /* Key part: true ellipse */
+    border-radius: 50% / 45%;
+
+    z-index: 0;
+}
+
+/* Content */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: var(--text-white);
+}
+
+/* Title */
+.hero-title {
+    font-family: "PlusJakartaSans";
+    font-size: clamp(48px, 5vw, 70px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 16px;
+}
+
+/* Subtitle */
+.hero-subtitle {
+    position: relative;
+    /* required for pseudo-element */
+    font-family: "PlusJakartaSans";
+    font-size: 35px;
+    opacity: 0.9;
+    margin: 32px 0 40px;
+    display: inline-block;
+}
+
+/* Orange underline */
+.hero-subtitle::after {
+    content: "";
+    position: absolute;
+    right: 2%;
+    bottom: -35px;
+    width: 240px;
+    height: 25px; 
+    background-image: url("/assets/common/pseudo-underline.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* ================= HERO ACTION BUTTONS ================= */
+/* Base button (shared) */
+.btn-hero,
+.btn-hero-outline {
+    width: 180px;
+    /* ← FIXED WIDTH (adjust if needed) */
+    height: 48px;
+    /* ← FIXED HEIGHT */
+    border-radius: 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    /* spacing between text & icon */
+
+    padding: 0;
+    /* IMPORTANT: no padding */
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+
+    white-space: nowrap;
+}
+
+/* Primary */
+.btn-hero {
+    background-color: #ffffff;
+    color: #3E97FF;
+    border: none;
+}
+
+/* .btn-hero:hover {
+    background-color: #f0f4ff;
+}
+
+/* Outline */
+.btn-hero-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+}
+
+.btn-hero-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Icons inside buttons */
+.btn-hero img,
+.btn-hero-outline img {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+/* Devices Image */
+.hero-devices {
+    /* margin-top: 60px; */
+    transform: translateY(40px);
+}
+
+.hero-devices img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .hero-devices {
+        margin-top: 40px;
+    }
+
+    .hero-title {
+        font-size: 32px;
+    }
+}
